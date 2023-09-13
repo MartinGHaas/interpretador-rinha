@@ -4,7 +4,7 @@
 
 const { exec } = require('child_process');
 
-// comando a ser executado no CMD
+// Comando para gerar a AST.
 const comando = 'rinha ./var/rinha/files/source.rinha > ./var/rinha/source.rinha.json';
 
 class Compiler {
