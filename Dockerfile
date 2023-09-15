@@ -1,3 +1,5 @@
+# O DOCKERFILE AINDA NÃO ESTÁ FINALIZADO!!!!
+
 # Imagem Base
 FROM node:latest
 
