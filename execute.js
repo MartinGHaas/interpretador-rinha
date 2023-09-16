@@ -7,7 +7,7 @@ function executeRinha(pathToRinha, environment = {}) {
     try {
       const pureData = fs.readFileSync(pathToRinha, 'utf-8');
       const AST = JSON.parse(pureData);
-      return interpreter(AST, environment);
+      return interpreter(AST.expression, environment);
     } catch(err) {
       const error = new Error();
       error.name = "Erro ao interpretar o Código"
@@ -18,4 +18,4 @@ function executeRinha(pathToRinha, environment = {}) {
   // Caso não exista compilação, o Compiler já executa a causa do erro
 }
 
-executeRinha('./var/rinha/source.rinha.json');
+executeRinha('./var/rinha/source.rinha.json', {});
