@@ -1,3 +1,9 @@
-let sfw_var = "com certeza não um palavrão";
-let sfw_name = "palavra bonita";
-sfw-var + sfw-name
+let sum = fn (n) => {
+  if (n == 1) {
+    n
+  } else {
+    n + sum(n - 1)
+  }
+};
+
+print (sum(5))
