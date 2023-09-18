@@ -1,1 +1,3 @@
-print("true")
+let sfw_var = "com certeza não um palavrão";
+let sfw_name = "palavra bonita";
+sfw-var + sfw-name

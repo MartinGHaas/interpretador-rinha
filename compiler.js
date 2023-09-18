@@ -10,13 +10,15 @@ const comando = 'rinha ./var/rinha/files/source.rinha > ./var/rinha/source.rinha
 class Compiler {
   static comandos = comando; // TODO: alterar para uma array posteriormente
 
-  // "Compila" o programa gerando a AST
-  static compile() {
+  // Gera a AST
+  static compile(callback) {
     exec(comando, (err, stdout, stderr) => {
-      if(err) console.log(stderr);
-      return false;
+      if(err) {
+        console.log(stderr);
+        return callback(false);
+      }
+      return callback(true);
     });
-    return true;
   }
 }
 
