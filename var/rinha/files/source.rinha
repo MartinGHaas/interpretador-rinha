@@ -1,9 +1,5 @@
-let sum = fn (n) => {
-  if (n == 1) {
-    n
-  } else {
-    n + sum(n - 1)
-  }
+let helloWorld = fn (txt) => {
+  print(txt)
 };
 
-print (sum(5))
+print(helloWorld)

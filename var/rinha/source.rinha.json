@@ -1,1 +1,76 @@
-{"name":"./var/rinha/files/source.rinha","expression":{"kind":"Let","name":{"text":"sum","location":{"start":4,"end":7,"filename":"./var/rinha/files/source.rinha"}},"value":{"kind":"Function","parameters":[{"text":"n","location":{"start":14,"end":15,"filename":"./var/rinha/files/source.rinha"}}],"value":{"kind":"If","condition":{"kind":"Binary","lhs":{"kind":"Var","text":"n","location":{"start":29,"end":30,"filename":"./var/rinha/files/source.rinha"}},"op":"Eq","rhs":{"kind":"Int","value":1,"location":{"start":34,"end":35,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":29,"end":35,"filename":"./var/rinha/files/source.rinha"}},"then":{"kind":"Var","text":"n","location":{"start":44,"end":45,"filename":"./var/rinha/files/source.rinha"}},"otherwise":{"kind":"Binary","lhs":{"kind":"Var","text":"n","location":{"start":63,"end":64,"filename":"./var/rinha/files/source.rinha"}},"op":"Add","rhs":{"kind":"Call","callee":{"kind":"Var","text":"sum","location":{"start":67,"end":70,"filename":"./var/rinha/files/source.rinha"}},"arguments":[{"kind":"Binary","lhs":{"kind":"Var","text":"n","location":{"start":71,"end":72,"filename":"./var/rinha/files/source.rinha"}},"op":"Sub","rhs":{"kind":"Int","value":1,"location":{"start":75,"end":76,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":71,"end":76,"filename":"./var/rinha/files/source.rinha"}}],"location":{"start":67,"end":77,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":63,"end":77,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":25,"end":82,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":10,"end":85,"filename":"./var/rinha/files/source.rinha"}},"next":{"kind":"Print","value":{"kind":"Call","callee":{"kind":"Var","text":"sum","location":{"start":97,"end":100,"filename":"./var/rinha/files/source.rinha"}},"arguments":[{"kind":"Int","value":5,"location":{"start":101,"end":102,"filename":"./var/rinha/files/source.rinha"}}],"location":{"start":97,"end":103,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":90,"end":104,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":0,"end":104,"filename":"./var/rinha/files/source.rinha"}},"location":{"start":0,"end":104,"filename":"./var/rinha/files/source.rinha"}}
+{
+  "name": "./var/rinha/files/source.rinha",
+  "expression": {
+    "kind": "Let",
+    "name": {
+      "text": "helloWorld",
+      "location": {
+        "start": 4,
+        "end": 14,
+        "filename": "./var/rinha/files/source.rinha"
+      }
+    },
+    "value": {
+      "kind": "Function",
+      "parameters": [
+        {
+          "text": "txt",
+          "location": {
+            "start": 21,
+            "end": 24,
+            "filename": "./var/rinha/files/source.rinha"
+          }
+        }
+      ],
+      "value": {
+        "kind": "Print",
+        "value": {
+          "kind": "Var",
+          "text": "txt",
+          "location": {
+            "start": 40,
+            "end": 43,
+            "filename": "./var/rinha/files/source.rinha"
+          }
+        },
+        "location": {
+          "start": 34,
+          "end": 44,
+          "filename": "./var/rinha/files/source.rinha"
+        }
+      },
+      "location": {
+        "start": 17,
+        "end": 47,
+        "filename": "./var/rinha/files/source.rinha"
+      }
+    },
+    "next": {
+      "kind": "Print",
+      "value": {
+        "kind": "Var",
+        "text": "helloWorld",
+        "location": {
+          "start": 58,
+          "end": 68,
+          "filename": "./var/rinha/files/source.rinha"
+        }
+      },
+      "location": {
+        "start": 52,
+        "end": 69,
+        "filename": "./var/rinha/files/source.rinha"
+      }
+    },
+    "location": {
+      "start": 0,
+      "end": 69,
+      "filename": "./var/rinha/files/source.rinha"
+    }
+  },
+  "location": {
+    "start": 0,
+    "end": 69,
+    "filename": "./var/rinha/files/source.rinha"
+  }
+}

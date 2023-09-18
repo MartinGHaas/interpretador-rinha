@@ -4,20 +4,19 @@ function interpreter(node, environment) {
     case 'Bool':
     case 'Int':
     case 'Str':
-      console.log('ENTROU NA TIPAGEM');
       return node.value;
     // Alterar caso print(print(x))
     case 'Print':
-      console.log('ENTROU NO PRINT');
       const term = interpreter(node.value, environment);
       return console.log(term);
     case 'Let':
-      console.log('ENTROU NO LET');
       const valor = interpreter(node.value, environment)
       return interpreter(node.next, {...environment, [node.name.text]: valor});
     case 'Var':
-      console.log('ENTROU NO VAR');
-      return environment[node.text];
+      if(environment[node.text]) {
+        return environment[node.text];
+      }
+      throw new Error('Variável Indefinida');
     case 'Binary':
       const lhs = interpreter(node.lhs, environment);
       const rhs = interpreter(node.rhs, environment);
@@ -26,10 +25,13 @@ function interpreter(node, environment) {
           return lhs + rhs;
         case 'Sub':
           return lhs - rhs;
-        case 'Mul': 
+        case 'Mul':
           return lhs * rhs;
         case 'Div':
-          return Math.floor(lhs / rhs); // Consertar divisões por 0 | O resultado é arredondado para o menor numero
+          if(rhs === 0){
+            throw new Error('Divisão Impossível');
+          }
+          return Math.floor(lhs / rhs);
         case 'Rem':
           return lhs / rhs;
         case 'Eq':
@@ -49,13 +51,19 @@ function interpreter(node, environment) {
         case 'Or':
           return lhs || rhs;
         default: 
-          console.log('Nenhuma Operação Encotrada');
-        // TODO: Ajeitar casos de booleanos para entradas SOMENTE booleanas
-      }
+          throw new Error('Operação não reconhecida')
+        }
     case 'If':
-      return;
+      // TODO: Ajeitar casos de booleanos para entradas SOMENTE booleanas
+      if(interpreter(node.condition, environment)){
+        return interpreter(node.then, environment);
+      }else {
+        return interpreter(node.otherwise, environment);
+      }
+    case 'Function':
+      return node;
     default:
-      console.log('Unrecognized Term');
+      throw new Error('Termo não reconhecido');
   }
 }
 
