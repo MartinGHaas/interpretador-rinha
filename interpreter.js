@@ -55,11 +55,7 @@ function interpreter(node, environment) {
           throw new Error('Operação não reconhecida')
       }
     case 'If':
-      if(interpreter(node.condition, environment) === true){
-        return interpreter(node.then, environment);
-      }else {
-        return interpreter(node.otherwise, environment);
-      }
+      return interpreter(node.condition, environment) === true ? interpreter(node.then, environment) : interpreter(node.otherwise, environment);
     case 'Function':
       return (obj) => {       
         const args = obj.args;
