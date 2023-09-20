@@ -13,10 +13,10 @@ function interpreter(node, environment) {
       const valor = interpreter(node.value, environment)
       return interpreter(node.next, {...environment, [node.name.text]: valor});
     case 'Var':
-      if(environment[node.text]) {
+      if(node.text in environment) {
         return environment[node.text];
       }
-      throw new Error('Variável Indefinida');
+      throw new Error(`Variável '${node.text}' não definida`);
     case 'Binary':
       const lhs = interpreter(node.lhs, environment);
       const rhs = interpreter(node.rhs, environment);
@@ -52,19 +52,42 @@ function interpreter(node, environment) {
           return lhs || rhs;
         default: 
           throw new Error('Operação não reconhecida')
-        }
+      }
     case 'If':
-      // TODO: Ajeitar casos de booleanos para entradas SOMENTE booleanas
-      if(interpreter(node.condition, environment)){
+      if(interpreter(node.condition, environment) === true){
         return interpreter(node.then, environment);
       }else {
         return interpreter(node.otherwise, environment);
       }
     case 'Function':
-      return node;
+      return (obj) => {       
+        const args = obj.args;
+        const environment = obj.env;
+
+        const localEnv = {...environment};
+        node.parameters.forEach((param, i) => {
+          localEnv[param.text] = args[i];
+        })
+        return interpreter(node.value, localEnv);
+      }
+      case 'Call':
+        const execFunc = interpreter(node.callee, environment);
+        const args = node.arguments.map(arg => interpreter(arg, environment));
+        // adicionar if mais args q params
+        return execFunc({args: [...args], env: environment}); // talvez melhorar a logica dps
     default:
       throw new Error('Termo não reconhecido');
   }
 }
+
+function logStats(txt) {
+  console.log(txt);
+}
+
+function logDebug(txt) {
+  console.log(txt);
+}
+
+// TODO: ajeitar problema com funções recursivas
 
 module.exports = interpreter;

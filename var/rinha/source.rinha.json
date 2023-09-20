@@ -3,10 +3,10 @@
   "expression": {
     "kind": "Let",
     "name": {
-      "text": "helloWorld",
+      "text": "fib",
       "location": {
         "start": 4,
-        "end": 14,
+        "end": 7,
         "filename": "./var/rinha/files/source.rinha"
       }
     },
@@ -14,63 +14,210 @@
       "kind": "Function",
       "parameters": [
         {
-          "text": "txt",
+          "text": "n",
           "location": {
-            "start": 21,
-            "end": 24,
+            "start": 14,
+            "end": 15,
             "filename": "./var/rinha/files/source.rinha"
           }
         }
       ],
       "value": {
-        "kind": "Print",
-        "value": {
-          "kind": "Var",
-          "text": "txt",
+        "kind": "If",
+        "condition": {
+          "kind": "Binary",
+          "lhs": {
+            "kind": "Var",
+            "text": "n",
+            "location": {
+              "start": 29,
+              "end": 30,
+              "filename": "./var/rinha/files/source.rinha"
+            }
+          },
+          "op": "Lt",
+          "rhs": {
+            "kind": "Int",
+            "value": 2,
+            "location": {
+              "start": 33,
+              "end": 34,
+              "filename": "./var/rinha/files/source.rinha"
+            }
+          },
           "location": {
-            "start": 40,
-            "end": 43,
+            "start": 29,
+            "end": 34,
+            "filename": "./var/rinha/files/source.rinha"
+          }
+        },
+        "then": {
+          "kind": "Var",
+          "text": "n",
+          "location": {
+            "start": 43,
+            "end": 44,
+            "filename": "./var/rinha/files/source.rinha"
+          }
+        },
+        "otherwise": {
+          "kind": "Binary",
+          "lhs": {
+            "kind": "Call",
+            "callee": {
+              "kind": "Var",
+              "text": "fib",
+              "location": {
+                "start": 62,
+                "end": 65,
+                "filename": "./var/rinha/files/source.rinha"
+              }
+            },
+            "arguments": [
+              {
+                "kind": "Binary",
+                "lhs": {
+                  "kind": "Var",
+                  "text": "n",
+                  "location": {
+                    "start": 66,
+                    "end": 67,
+                    "filename": "./var/rinha/files/source.rinha"
+                  }
+                },
+                "op": "Sub",
+                "rhs": {
+                  "kind": "Int",
+                  "value": 1,
+                  "location": {
+                    "start": 70,
+                    "end": 71,
+                    "filename": "./var/rinha/files/source.rinha"
+                  }
+                },
+                "location": {
+                  "start": 66,
+                  "end": 71,
+                  "filename": "./var/rinha/files/source.rinha"
+                }
+              }
+            ],
+            "location": {
+              "start": 62,
+              "end": 72,
+              "filename": "./var/rinha/files/source.rinha"
+            }
+          },
+          "op": "Add",
+          "rhs": {
+            "kind": "Call",
+            "callee": {
+              "kind": "Var",
+              "text": "fib",
+              "location": {
+                "start": 75,
+                "end": 78,
+                "filename": "./var/rinha/files/source.rinha"
+              }
+            },
+            "arguments": [
+              {
+                "kind": "Binary",
+                "lhs": {
+                  "kind": "Var",
+                  "text": "n",
+                  "location": {
+                    "start": 79,
+                    "end": 80,
+                    "filename": "./var/rinha/files/source.rinha"
+                  }
+                },
+                "op": "Sub",
+                "rhs": {
+                  "kind": "Int",
+                  "value": 2,
+                  "location": {
+                    "start": 83,
+                    "end": 84,
+                    "filename": "./var/rinha/files/source.rinha"
+                  }
+                },
+                "location": {
+                  "start": 79,
+                  "end": 84,
+                  "filename": "./var/rinha/files/source.rinha"
+                }
+              }
+            ],
+            "location": {
+              "start": 75,
+              "end": 85,
+              "filename": "./var/rinha/files/source.rinha"
+            }
+          },
+          "location": {
+            "start": 62,
+            "end": 85,
             "filename": "./var/rinha/files/source.rinha"
           }
         },
         "location": {
-          "start": 34,
-          "end": 44,
+          "start": 25,
+          "end": 90,
           "filename": "./var/rinha/files/source.rinha"
         }
       },
       "location": {
-        "start": 17,
-        "end": 47,
+        "start": 10,
+        "end": 93,
         "filename": "./var/rinha/files/source.rinha"
       }
     },
     "next": {
       "kind": "Print",
       "value": {
-        "kind": "Var",
-        "text": "helloWorld",
+        "kind": "Call",
+        "callee": {
+          "kind": "Var",
+          "text": "fib",
+          "location": {
+            "start": 104,
+            "end": 107,
+            "filename": "./var/rinha/files/source.rinha"
+          }
+        },
+        "arguments": [
+          {
+            "kind": "Int",
+            "value": 10,
+            "location": {
+              "start": 108,
+              "end": 110,
+              "filename": "./var/rinha/files/source.rinha"
+            }
+          }
+        ],
         "location": {
-          "start": 58,
-          "end": 68,
+          "start": 104,
+          "end": 111,
           "filename": "./var/rinha/files/source.rinha"
         }
       },
       "location": {
-        "start": 52,
-        "end": 69,
+        "start": 98,
+        "end": 112,
         "filename": "./var/rinha/files/source.rinha"
       }
     },
     "location": {
       "start": 0,
-      "end": 69,
+      "end": 112,
       "filename": "./var/rinha/files/source.rinha"
     }
   },
   "location": {
     "start": 0,
-    "end": 69,
+    "end": 112,
     "filename": "./var/rinha/files/source.rinha"
   }
 }

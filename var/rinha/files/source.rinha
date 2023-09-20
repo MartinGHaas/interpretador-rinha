@@ -1,5 +1,9 @@
-let helloWorld = fn (txt) => {
-  print(txt)
+let fib = fn (n) => {
+  if (n < 2) {
+    n
+  } else {
+    fib(n - 1) + fib(n - 2)
+  }
 };
 
-print(helloWorld)
+print(fib(10))
