@@ -8,7 +8,8 @@ function interpreter(node, environment) {
     // Alterar caso print(print(x))
     case 'Print':
       const term = interpreter(node.value, environment);
-      return console.log(term);
+      console.log(term);
+      return term;
     case 'Let':
       const valor = interpreter(node.value, environment)
       return interpreter(node.next, {...environment, [node.name.text]: valor});
@@ -33,7 +34,7 @@ function interpreter(node, environment) {
           }
           return Math.floor(lhs / rhs);
         case 'Rem':
-          return lhs / rhs;
+          return lhs % rhs;
         case 'Eq':
           return lhs === rhs;
         case 'Neq':
@@ -75,6 +76,12 @@ function interpreter(node, environment) {
         const args = node.arguments.map(arg => interpreter(arg, environment));
         // adicionar if mais args q params
         return execFunc({args: [...args], env: environment}); // talvez melhorar a logica dps
+      case 'Tuple':
+        return [interpreter(node.first, environment), interpreter(node.second, environment)];
+      case 'First':
+        return interpreter(node.value.first, environment);
+      case 'Second':
+        return interpreter(node.value.second, environment);
     default:
       throw new Error('Termo não reconhecido');
   }
@@ -87,7 +94,5 @@ function logStats(txt) {
 function logDebug(txt) {
   console.log(txt);
 }
-
-// TODO: ajeitar problema com funções recursivas
 
 module.exports = interpreter;
