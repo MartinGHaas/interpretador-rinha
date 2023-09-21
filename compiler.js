@@ -1,6 +1,4 @@
-// TODO: Verificar mais arquivos e somente compilar os não modificados
-// TODO: Executar um erro só, ao invés de executar todos de uma vez
-// TODO: Adicionar autosave | UTILIZAR rinhaconfig.json
+// SERÁ UTILIZADO SOMENTE EM DESENVOLVIMENTO
 
 const { exec } = require('child_process');
 
@@ -8,8 +6,6 @@ const { exec } = require('child_process');
 const comando = 'rinha ./var/rinha/files/source.rinha > ./var/rinha/source.rinha.json';
 
 class Compiler {
-  static comandos = comando; // TODO: alterar para uma array posteriormente
-
   // Gera a AST
   static compile(callback) {
     exec(comando, (err, stdout, stderr) => {

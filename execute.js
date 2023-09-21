@@ -2,6 +2,7 @@ const fs = require('fs');
 const interpreter = require('./interpreter');
 const Compiler = require('./compiler');
 
+// TODO: retirar o compiler(SOMENTE NO FINAL)
 function executeRinha(pathToRinha, environment = {}) {
     Compiler.compile((compilou) => {
       if(compilou) {

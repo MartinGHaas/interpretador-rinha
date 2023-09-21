@@ -5,7 +5,6 @@ function interpreter(node, environment) {
     case 'Int':
     case 'Str':
       return node.value;
-    // Alterar caso print(print(x))
     case 'Print':
       const term = interpreter(node.value, environment);
       console.log(term);
@@ -82,6 +81,11 @@ function interpreter(node, environment) {
       throw new Error('Termo não reconhecido');
   }
 }
+
+// TODO: Ajeitar casos de Closures
+// TODO: ajeitar caso de fib
+// TODO: FUNCS -> adicionar if mais args q params
+// TODO: Realizar testes nodeJS\Bun
 
 function logStats(txt) {
   console.log(txt);
