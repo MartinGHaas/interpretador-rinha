@@ -1,27 +1,19 @@
-const fib = (n) => {
-  const F = [
-    [BigInt(1), BigInt(1)],
-    [BigInt(1), BigInt(0)]
-  ]
+// Melhor para números "pequenos"
 
-  let M = F;
-  for(let i = 2; i <= n; i++) {
-    let a11 = M[0][0] * F[0][0] + M[0][1] * F[1][0];
-    let a12 = M[0][0] * F[0][1] + M[0][1] * F[1][1];
-    let a21 = M[1][0] * F[0][0] + M[1][1] * F[1][0];
-    let a22 = M[1][0] * F[0][1] + M[1][1] * F[1][1];
+function fib(n) {
+  if (n <= 0) return 0;
+  if (n === 1) return 1;
 
-    M = [
-      [a11, a12],
-      [a21, a22]
-    ]
+  let pre = 0;
+  let atual = 1;
+
+  for (let i = 2; i <= n; i++) {
+    const next = pre + atual;
+    pre = atual;
+    atual = next;
   }
-  return M[0][1].toString(); // Valor equivalente a F(n)
+
+  return atual;
 }
 
-console.log(fib(1000));
-
-// Fontes: 
-// Wikipedia: https://pt.wikipedia.org/wiki/Sequ%C3%AAncia_de_Fibonacci
-// Matemática Rio: https://www.youtube.com/watch?v=N3mgQIGxtlE
-// Lucas Montano(do canal Lucas Montano): https://youtu.be/XfmZRS6oP3U?si=JyGOaxo_EuwQhi9p
+module.exports = fib;

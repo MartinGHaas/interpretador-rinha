@@ -1,0 +1,13 @@
+{
+  "name": "interpretador-rinha",
+  "version": "1.0.0",
+  "description": "Interpretador para rinha(https://github.com/aripiprazole/rinha-de-compiler)",
+  "main": "execute.js",
+  "scripts": {
+    "dev:start": "node execute",
+    "dev:compile": "node test",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MartinGHaas",
+  "license": "MIT"
+}

@@ -10,8 +10,9 @@ function interpreter(node, environment) {
       console.log(term);
       return term;
     case 'Let':
-      const valor = interpreter(node.value, environment)
-      return interpreter(node.next, {...environment, [node.name.text]: valor});
+      const newEnv = {...environment, [node.name.text]: null}
+      const valor = interpreter(node.value, environment);
+      return interpreter(node.next, {...newEnv, [node.name.text]: valor});
     case 'Var':
       if(node.text in environment) {
         return environment[node.text];
@@ -56,27 +57,23 @@ function interpreter(node, environment) {
     case 'If':
       return interpreter(node.condition, environment) === true ? interpreter(node.then, environment) : interpreter(node.otherwise, environment);
     case 'Function':
-      return (obj) => {       
-        const args = obj.args;
-        const environment = obj.env;
-
-        const localEnv = {...environment};
+      return (args, env) => {
+        const localEnv = {...env};
         node.parameters.forEach((param, i) => {
           localEnv[param.text] = args[i];
         })
         return interpreter(node.value, localEnv);
       }
-      case 'Call':
-        const execFunc = interpreter(node.callee, environment);
-        const args = node.arguments.map(arg => interpreter(arg, environment));
-        // adicionar if mais args q params
-        return execFunc({args: [...args], env: environment}); // talvez melhorar a logica dps
-      case 'Tuple':
-        return [interpreter(node.first, environment), interpreter(node.second, environment)];
-      case 'First':
-        return interpreter(node.value.first, environment);
-      case 'Second':
-        return interpreter(node.value.second, environment);
+    case 'Call':
+      const execFunc = interpreter(node.callee, environment);
+      const args = node.arguments.map(arg => interpreter(arg, environment));
+      return execFunc(args, environment);
+    case 'Tuple':
+      return `(${interpreter(node.first, environment)}, ${interpreter(node.second, environment)})`;
+    case 'First':
+      return interpreter(node.value.first, environment);
+    case 'Second':
+      return interpreter(node.value.second, environment);
     default:
       throw new Error('Termo não reconhecido');
   }
@@ -84,7 +81,6 @@ function interpreter(node, environment) {
 
 // TODO: Ajeitar casos de Closures
 // TODO: ajeitar caso de fib
-// TODO: FUNCS -> adicionar if mais args q params
 // TODO: Realizar testes nodeJS\Bun
 
 function logStats(txt) {
