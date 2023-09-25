@@ -1,6 +1,5 @@
 function interpreter(node, environment) {
   switch (node.kind) {
-    // Tipagem
     case 'Bool':
     case 'Int':
     case 'Str':
@@ -10,12 +9,13 @@ function interpreter(node, environment) {
       console.log(term);
       return term;
     case 'Let':
-      const newEnv = {...environment, [node.name.text]: null}
       const valor = interpreter(node.value, environment);
-      return interpreter(node.next, {...newEnv, [node.name.text]: valor});
+      environment[node.name.text] = valor;
+      return interpreter(node.next, environment);
     case 'Var':
-      if(node.text in environment) {
-        return environment[node.text];
+      const newVar = node.text;
+      if(newVar in environment) {
+        return environment[newVar];
       }
       throw new Error(`Variável '${node.text}' não definida`);
     case 'Binary':
@@ -57,17 +57,16 @@ function interpreter(node, environment) {
     case 'If':
       return interpreter(node.condition, environment) === true ? interpreter(node.then, environment) : interpreter(node.otherwise, environment);
     case 'Function':
-      return (args, env) => {
-        const localEnv = {...env};
-        node.parameters.forEach((param, i) => {
-          localEnv[param.text] = args[i];
-        })
-        return interpreter(node.value, localEnv);
-      }
+      return {node: node, env: environment};      
     case 'Call':
-      const execFunc = interpreter(node.callee, environment);
+      const callee = interpreter(node.callee, environment);
+      const FNode = callee.node;
       const args = node.arguments.map(arg => interpreter(arg, environment));
-      return execFunc(args, environment);
+      const localEnv = { ...callee.env };
+      FNode.parameters.forEach((param, i) => {
+        localEnv[param.text] = args[i];
+      });
+      return interpreter(FNode.value, localEnv);
     case 'Tuple':
       return `(${interpreter(node.first, environment)}, ${interpreter(node.second, environment)})`;
     case 'First':
@@ -79,7 +78,6 @@ function interpreter(node, environment) {
   }
 }
 
-// TODO: Ajeitar casos de Closures
 // TODO: ajeitar caso de fib
 // TODO: Realizar testes nodeJS\Bun
 

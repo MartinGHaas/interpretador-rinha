@@ -14,7 +14,6 @@ RUN npm install
 COPY compiler.js ./
 COPY execute.js ./
 COPY interpreter.js ./
-# TODO: Chamar a AST
 
 # Executa o código
 CMD [ "node", "execute.js" ]
