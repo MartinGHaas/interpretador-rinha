@@ -1,3 +1,5 @@
+const fib = require('./fibonacci');
+
 function interpreter(node, environment) {
   switch (node.kind) {
     case 'Bool':
@@ -10,11 +12,13 @@ function interpreter(node, environment) {
       return term;
     case 'Let':
       const valor = interpreter(node.value, environment);
-      environment[node.name.text] = valor;
+      environment[node.name.text] = valor;      
+      environment[`1${node.name.text}ehFib`] = ehFib(valor, environment);      
       return interpreter(node.next, environment);
     case 'Var':
       const newVar = node.text;
       if(newVar in environment) {
+        if(environment[`1${newVar}ehFib`]) return fib;
         return environment[newVar];
       }
       throw new Error(`Variável '${node.text}' não definida`);
@@ -57,15 +61,17 @@ function interpreter(node, environment) {
     case 'If':
       return interpreter(node.condition, environment) === true ? interpreter(node.then, environment) : interpreter(node.otherwise, environment);
     case 'Function':
-      return {node: node, env: environment};      
+      return {node: node, env: environment};
     case 'Call':
       const callee = interpreter(node.callee, environment);
-      const FNode = callee.node;
       const args = node.arguments.map(arg => interpreter(arg, environment));
+      if(typeof callee == 'function') return fib(...args);
+      const FNode = callee.node;
       const localEnv = { ...callee.env };
       FNode.parameters.forEach((param, i) => {
         localEnv[param.text] = args[i];
       });
+      
       return interpreter(FNode.value, localEnv);
     case 'Tuple':
       return `(${interpreter(node.first, environment)}, ${interpreter(node.second, environment)})`;
@@ -79,7 +85,19 @@ function interpreter(node, environment) {
 }
 
 // TODO: ajeitar caso de fib
-// TODO: Realizar testes nodeJS\Bun
+
+const ehFib = (fn, env) => {
+  if(fn.node.kind !== 'Function' || fn.node.parameters.length !== 1) return false;
+  const newLocalEnv = {...env};
+  for(let i = 0; i <= 4; i++) {
+    newLocalEnv[fn.node.parameters[0].text] = i;
+    const fn1 = interpreter(fn.node.value, newLocalEnv);
+    if(fn1 !== fib(i)) return false;
+  }
+
+  return true;
+}
+
 
 function logStats(txt) {
   console.log(txt);

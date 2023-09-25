@@ -1,9 +1,9 @@
-let fib = fn (n) => {
-  if (n < 2) {
+let sum = fn (n) => {
+  if (n == 1) {
     n
   } else {
-    fib(n - 1) + fib(n - 2)
+    n + sum(n - 1)
   }
 };
 
-print(fib(10))
+print (sum(0))
