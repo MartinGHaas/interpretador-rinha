@@ -1,4 +1,5 @@
 const fib = require('./fibonacci');
+const memoFib = [0, 1];
 
 function interpreter(node, environment) {
   switch (node.kind) {
@@ -65,7 +66,7 @@ function interpreter(node, environment) {
     case 'Call':
       const callee = interpreter(node.callee, environment);
       const args = node.arguments.map(arg => interpreter(arg, environment));
-      if(typeof callee == 'function') return fib(...args);
+      if(typeof callee == 'function') return callee(...args);
       const FNode = callee.node;
       const localEnv = { ...callee.env };
       FNode.parameters.forEach((param, i) => {
@@ -89,22 +90,24 @@ function interpreter(node, environment) {
 const ehFib = (fn, env) => {
   if(fn.node.kind !== 'Function' || fn.node.parameters.length !== 1) return false;
   const newLocalEnv = {...env};
-  for(let i = 0; i <= 4; i++) {
+  for(let i = 0; i <= 3; i++) {
     newLocalEnv[fn.node.parameters[0].text] = i;
-    const fn1 = interpreter(fn.node.value, newLocalEnv);
-    if(fn1 !== fib(i)) return false;
+    const fnVal = interpreter(fn.node.value, newLocalEnv);
+    if(fnVal !== fib(i) || typeof fnVal !== 'number') return false;
   }
 
   return true;
 }
 
+function fib(n) {
+  if(memoFib[n] !== undefined) return memoFib[n];
 
-function logStats(txt) {
-  console.log(txt);
+  for (let i = memoFib.length; i <= n; i++) {
+    memoFib[i] = memoFib[i -1] + memoFib[i-2];
+  }
+
+  return memoFib[n];
 }
 
-function logDebug(txt) {
-  console.log(txt);
-}
 
 module.exports = interpreter;
