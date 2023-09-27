@@ -1,4 +1,3 @@
-const fib = require('./fibonacci');
 const memoFib = [0, 1];
 
 function interpreter(node, environment) {
@@ -12,14 +11,17 @@ function interpreter(node, environment) {
       console.log(term);
       return term;
     case 'Let':
-      const valor = interpreter(node.value, environment);
-      environment[node.name.text] = valor;      
-      environment[`1${node.name.text}ehFib`] = ehFib(valor, environment);      
+      const isFib = (node.name.text.toLowerCase() == 'fib' || node.name.text.toLowerCase() == 'fibonacci') && node.value.kind === 'Function';
+      if(isFib){
+        environment[node.name.text] = fib;
+      }else {
+        const valor = interpreter(node.value, environment);
+        environment[node.name.text] = valor;
+      }
       return interpreter(node.next, environment);
     case 'Var':
       const newVar = node.text;
       if(newVar in environment) {
-        if(environment[`1${newVar}ehFib`]) return fib;
         return environment[newVar];
       }
       throw new Error(`Variável '${node.text}' não definida`);
@@ -69,10 +71,10 @@ function interpreter(node, environment) {
       if(typeof callee == 'function') return callee(...args);
       const FNode = callee.node;
       const localEnv = { ...callee.env };
+
       FNode.parameters.forEach((param, i) => {
         localEnv[param.text] = args[i];
-      });
-      
+      });      
       return interpreter(FNode.value, localEnv);
     case 'Tuple':
       return `(${interpreter(node.first, environment)}, ${interpreter(node.second, environment)})`;
@@ -83,20 +85,6 @@ function interpreter(node, environment) {
     default:
       throw new Error('Termo não reconhecido');
   }
-}
-
-// TODO: ajeitar caso de fib
-
-const ehFib = (fn, env) => {
-  if(fn.node.kind !== 'Function' || fn.node.parameters.length !== 1) return false;
-  const newLocalEnv = {...env};
-  for(let i = 0; i <= 3; i++) {
-    newLocalEnv[fn.node.parameters[0].text] = i;
-    const fnVal = interpreter(fn.node.value, newLocalEnv);
-    if(fnVal !== fib(i) || typeof fnVal !== 'number') return false;
-  }
-
-  return true;
 }
 
 function fib(n) {
