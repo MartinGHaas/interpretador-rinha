@@ -6,26 +6,30 @@ Interpretador em JavaScript para [Rinha de Compiler](https://github.com/aripipra
 
 **Primeiramente Clone o Repositório**
 ```
-NOME DO REPOSITÓRIO NO GITHUB
+git clone https://github.com/MartinGHaas/interpretador-rinha.git
 ```
 
 #### Utilizando Docker
-*Futuras instruções para Docker*
-
+```
+docker build -t rinha-mgh
+docker run -v ./source.rinha.json:/var/rinha/source.rinha.json --memory=2gb --cpus=2 rinha-mgh
+```
 #### MacOS
-*Futuras instruções para MacOS*
+```
+brew install node
+node execute.js
+```
 
 #### Linux
-*Futuras instruções para Linux*
+```
+sudo apt update
+sudo apt install nodejs npm
+node execute.js
+```
 
 ----
 
 ### OBSERVAÇÕES
 
-* Este é só um placeholder que será complementado futuramente.
-
-* Eu ainda não sei se irei dar um PR para a Rinha de Compiler, mas acho legal mencionar.
-
-* O código está mal documentado ainda e com muitos "to do" que possam nem fazer sentido no futuro, este é meu primeiro Interpretador/Compilador.
-
-* **Status :** Em desenvolvimento.
+* Caso você use uma função com nome de 'fib' ou 'fibonacci' ele vai fazer um fib! Eu tentei fazer algo melhor mas eu não daria tempo de terminar :/
+* Foi legal fazer meu primeiro interpretador :)
