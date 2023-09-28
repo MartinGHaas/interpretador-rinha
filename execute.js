@@ -2,7 +2,6 @@ const fs = require('fs');
 const interpreter = require('./interpreter');
 
 function executeRinha(pathToRinha, environment = {}) {
-
   try {
     const pureData = fs.readFileSync(pathToRinha, 'utf-8');
     const AST = JSON.parse(pureData);

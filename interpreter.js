@@ -77,11 +77,17 @@ function interpreter(node, environment) {
       });      
       return interpreter(FNode.value, localEnv);
     case 'Tuple':
-      return `(${interpreter(node.first, environment)}, ${interpreter(node.second, environment)})`;
+      return [interpreter(node.first, environment), interpreter(node.second, environment)];
     case 'First':
-      return interpreter(node.value.first, environment);
+      if(node.value.kind === 'Tuple') {
+        return interpreter(node.value.first, environment);
+      }
+      throw new Error('Impossível ler first de uma não tupla')
     case 'Second':
-      return interpreter(node.value.second, environment);
+      if(node.value.kind === 'Tuple') {
+        return interpreter(node.value.second, environment);
+      }
+      throw new Error('Impossível ler second de uma não tupla');
     default:
       throw new Error('Termo não reconhecido');
   }
